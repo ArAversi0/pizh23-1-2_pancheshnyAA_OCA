@@ -1,5 +1,6 @@
 #include "sum_analysis.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 /* 
  * Реализует простую задачу: ввод двух чисел и вывод их суммы.
@@ -16,3 +17,38 @@ void calculate_sum(void) { /* O(1) */
     long double result = a + b; /* O(1) - арифметическая операция */
     printf("Результат: %.10Lg\n", result); /* O(1) - вывод результата */
 } /* Общая сложность: O(1) */
+
+long double* read_numbers_from_file(const char* filename, size_t* count) { /* O(N) */
+    FILE* file = fopen(filename, "r"); /* O(1) */
+    if (!file) { /* O(1) */
+        perror("Не удалось открыть файл"); /* O(1) */
+        *count = 0; /* O(1) */
+        return NULL; /* O(1) */
+    }
+
+    size_t capacity = 10; /* O(1) */
+    size_t n = 0; /* O(1) */
+    long double* numbers = malloc(capacity * sizeof(long double)); /* O(1) */
+    if (!numbers) { /* O(1) */
+        perror("Не удалось выделить память"); /* O(1) */
+        fclose(file); /* O(1) */
+        *count = 0; /* O(1) */
+        return NULL; /* O(1) */
+    }
+
+    long double temp;
+    printf("Содержимое файла: "); /* O(1) */
+    while (fscanf(file, "%Lf", &temp) == 1) { /* O(N) */
+        if (n >= capacity) { /* O(1) */
+            capacity *= 2; /* O(1) */
+            numbers = realloc(numbers, capacity * sizeof(long double)); /* O(n) амортизированно O(N) */
+        }
+        numbers[n++] = temp; /* O(1) */
+        printf("%.10Lg ", temp); /* O(1) */
+    }
+    printf("\n"); /* O(1) */
+
+    fclose(file); /* O(1) */
+    *count = n; /* O(1) */
+    return numbers; /* O(1) */
+} /* Общая сложность: O(N) */
