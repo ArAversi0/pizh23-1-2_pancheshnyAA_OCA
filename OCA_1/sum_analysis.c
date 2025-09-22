@@ -52,3 +52,15 @@ long double* read_numbers_from_file(const char* filename, size_t* count) { /* O(
     *count = n; /* O(1) */
     return numbers; /* O(1) */
 } /* Общая сложность: O(N) */
+
+/* sum_array
+ * Вычисляет сумму всех элементов массива.
+ * Сложность: O(N)
+ */
+long double sum_array(const long double* arr, size_t count) { /* O(1) */
+    long double total = 0.0; /* O(1) - инициализация */
+    for (size_t i = 0; i < count; i++) { /* O(N) - цикл по всем элементам */
+        total += arr[i]; /* O(1) - сложение и присваивание */
+    }
+    return total; /* O(1) - возврат результата */
+} /* Общая сложность: O(N) */
