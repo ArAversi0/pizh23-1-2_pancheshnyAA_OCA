@@ -12,4 +12,7 @@ long double* read_numbers_from_file(const char* filename, size_t* count); /* O(N
 /* Вычисление суммы элементов массива */
 long double sum_array(const long double* arr, size_t count); /* O(N) */
 
+/* Генерация файла с числами для тестирования */
+void generate_numbers_file(const char* filename, size_t count, int include_negative); /* O(N) */
+
 #endif /* SUM_ANALYSIS_H */

@@ -1,6 +1,7 @@
 #include "sum_analysis.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 /* 
  * Реализует простую задачу: ввод двух чисел и вывод их суммы.
@@ -37,6 +38,7 @@ long double* read_numbers_from_file(const char* filename, size_t* count) { /* O(
     }
 
     long double temp;
+    size_t printed = 0;
     printf("Содержимое файла: "); /* O(1) */
     while (fscanf(file, "%Lf", &temp) == 1) { /* O(N) */
         if (n >= capacity) { /* O(1) */
@@ -44,9 +46,18 @@ long double* read_numbers_from_file(const char* filename, size_t* count) { /* O(
             numbers = realloc(numbers, capacity * sizeof(long double)); /* O(n) амортизированно O(N) */
         }
         numbers[n++] = temp; /* O(1) */
-        printf("%.10Lg ", temp); /* O(1) */
+
+        if (printed < 20) { /* O(1) */
+            printf("%.10Lg ", temp); /* O(1) */
+            printed++; /* O(1) */
+        }
     }
-    printf("\n"); /* O(1) */
+
+    if (n > 20) {
+        printf("... (всего %zu чисел)\n", n); /* O(1) */
+    } else {
+        printf("\n"); /* O(1) */
+    }
 
     fclose(file); /* O(1) */
     *count = n; /* O(1) */
@@ -64,3 +75,33 @@ long double sum_array(const long double* arr, size_t count) { /* O(1) */
     }
     return total; /* O(1) - возврат результата */
 } /* Общая сложность: O(N) */
+
+/* generate_numbers_file
+ * Создаёт текстовый файл с указанным количеством чисел.
+ * Параметры:
+ *   filename - имя файла
+ *   count - количество чисел
+ *   include_negative - 1, если нужны отрицательные числа, 0 иначе
+ * Сложность: O(N)
+ */
+void generate_numbers_file(const char* filename, size_t count, int include_negative) { /* O(1) */
+    FILE* file = fopen(filename, "w"); /* O(1) */
+    if (!file) { /* O(1) */
+        perror("Не удалось создать файл"); /* O(1) */
+        return; /* O(1) */
+    }
+
+    srand((unsigned int)time(NULL)); /* O(1) - инициализация генератора */
+
+    for (size_t i = 0; i < count; i++) { /* O(N) */
+        long double num = (rand() % 10000) / 100.0; /* O(1) - дробное число от 0 до 99.99 */
+        if (include_negative && (rand() % 2 == 0)) { /* O(1) */
+            num = -num; /* O(1) */
+        }
+        fprintf(file, "%.2Lf ", num); /* O(1) */
+    }
+    fprintf(file, "\n"); /* O(1) */
+
+    fclose(file); /* O(1) */
+} /* Общая сложность: O(N) */
+
