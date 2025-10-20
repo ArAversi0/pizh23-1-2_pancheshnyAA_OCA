@@ -1,9 +1,0 @@
-{
-    "code-runner.executorMap": {
-        "c": "cd $dir && gcc main.c sum_analysis.c -o program.exe && ./program.exe"
-    },
-    "code-runner.runInTerminal": true,
-    "files.associations": {
-        "sum_analysis.h": "c"
-    }
-}

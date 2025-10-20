@@ -104,39 +104,67 @@ double sum_array(const double *arr, size_t size) {  // O(N)
 // ----------------------
 // Замер времени выполнения обеих функций
 // ----------------------
-void measure_execution_time(void) {                 // O(K * N)
-    printf("\n=== Замер времени выполнения ===\n"); // O(1)
+// ----------------------
+// Замер времени выполнения обеих функций
+// ----------------------
+void measure_execution_time(void) {                                 // O(K * N)
+    printf("\n=== Замер времени выполнения ===\n");                 // O(1)
 
-    // 1️⃣ Простая задача
-    printf("\n[1] Простая задача (calculate_sum):\n"); // O(1)
-    printf("Введите два числа для теста (например 10 20):\n"); // O(1)
-    double start_simple = get_time_ms();            // O(1)
-    calculate_sum();                                // O(1)
-    double end_simple = get_time_ms();              // O(1)
-    printf("Время выполнения (включая ввод): %.6f мс\n", end_simple - start_simple); // O(1)
+    // === 1. Простая задача ===
+    printf("\n[1] Простая задача (calculate_sum):\n");              // O(1)
+    printf("Введите два числа для теста (например 10 20):\n");      // O(1)
 
-    // 2️⃣ Усложнённая задача — суммирование массива из файла
-    printf("\n[2] Суммирование массива из файла (sum_array):\n"); // O(1)
-    size_t sizes[] = {1000, 5000, 10000, 50000, 100000}; // O(1)
-    int num_sizes = sizeof(sizes) / sizeof(sizes[0]);     // O(1)
+    double start_simple = get_time_ms();                            // O(1)
+    calculate_sum();                                                // O(1)
+    double end_simple = get_time_ms();                              // O(1)
 
-    for (int i = 0; i < num_sizes; i++) {                 // O(K)
-        size_t n = sizes[i];                              // O(1)
-        generate_numbers_file("numbers.txt", n, 1);       // O(N)
-        size_t count;                                     // O(1)
-        double *arr = read_numbers_from_file("numbers.txt", &count); // O(N)
-        if (!arr) return;                                 // O(1)
+    printf("Время выполнения (включая ввод): %.6f мс\n",
+           end_simple - start_simple);                              // O(1)
 
-        double start = get_time_ms();                     // O(1)
-        double sum = sum_array(arr, count);               // O(N)
-        double end = get_time_ms();                       // O(1)
 
-        printf("Размер: %6zu | Сумма: %12.2f | Время: %10.6f мс\n", n, sum, end - start); // O(1)
-        free(arr);                                        // O(1)
+    // === 2. Суммирование массива из файла (данные идут в CSV) ===
+    printf("\n[2] Суммирование массива из файла (sum_array):\n");   // O(1)
+    size_t sizes[] = {1000, 5000, 10000, 50000, 100000, 500000};    // O(1)
+    int num_sizes = sizeof(sizes) / sizeof(sizes[0]);               // O(1)
+
+    // Создаём CSV-файл (перезаписывается при каждом запуске) — O(1)
+    FILE *csv = fopen("results.csv", "w");
+    if (!csv) {
+        perror("Ошибка при создании results.csv");
+        return;                                                     // O(1)
     }
-}
-// Общая сложность measure_execution_time: O(K * N)
+    fprintf(csv, "N,Time_ms\n");                                    // O(1)
 
+    // Цикл тестирования разных размеров массива — O(K)
+    for (int i = 0; i < num_sizes; i++) {                           // O(K)
+        size_t n = sizes[i];                                        // O(1)
+        generate_numbers_file("numbers.txt", n, 1);                 // O(N)
+        size_t count;                                               // O(1)
+        double *arr = read_numbers_from_file("numbers.txt", &count);// O(N)
+        if (!arr) {
+            fclose(csv);
+            return;                                                 // O(1)
+        }
+
+        double start = get_time_ms();                               // O(1)
+        double sum = sum_array(arr, count);                         // O(N)
+        double end = get_time_ms();                                 // O(1)
+        double elapsed = end - start;                               // O(1)
+
+        // Вывод в консоль
+        printf("Размер: %8zu | Сумма: %12.2f | Время: %10.6f мс\n",
+               n, sum, elapsed);                                    // O(1)
+
+        // Запись только результатов суммирования в CSV
+        fprintf(csv, "%zu,%.6f\n", n, elapsed);                     // O(1)
+
+        free(arr);                                                  // O(1)
+    }
+
+    fclose(csv);                                                    // O(1)
+}
+// Общая сложность measure_execution_time: O(K * N),
+// где K — количество тестов, N — размер массива в каждом тесте.
 
 // ----------------------
 // Вывод характеристик ПК
