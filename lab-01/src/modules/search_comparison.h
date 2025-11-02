@@ -16,4 +16,7 @@ int* generate_sorted_array(int size);  // O(n)
 // Функция для измерения времени выполнения поиска (использует QueryPerformanceCounter на Windows, clock_gettime на POSIX)
 double measure_time(int (*search_func)(int[], int, int), int arr[], int size, int target, int iterations);  // O(iterations * complexity(search_func))
 
+// Функция для записи результатов в CSV файл
+void write_to_csv(const char* filename, int sizes[], double linear_times[], double binary_times[], int num_sizes);  // O(num_sizes)
+
 #endif

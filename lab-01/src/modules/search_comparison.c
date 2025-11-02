@@ -104,3 +104,27 @@ double measure_time(int (*search_func)(int[], int, int), int arr[], int size, in
     return total_time / iterations;  // O(1) - возврат среднего значения
 }
 // Общая сложность: O(iterations * complexity(search_func))
+
+// Функция для записи результатов в CSV файл
+void write_to_csv(const char* filename, int sizes[], double linear_times[], double binary_times[], int num_sizes) {
+    FILE* file = fopen(filename, "w");  // O(1) - открытие файла
+    int i;  // O(1) - объявление переменной
+    
+    if (file == NULL) {  // O(1) - проверка указателя
+         printf("Ошибка открытия файла! Код errno = %d (%s)\n",
+             errno, strerror(errno));  // O(1) - вывод сообщения
+        return;  // O(1) - возврат
+    }
+    
+    // Запись заголовка
+    fprintf(file, "ArraySize,LinearSearchTime,BinarySearchTime\n");  // O(1) - запись в файл
+    
+    // O(num_sizes) - запись данных
+    for (i = 0; i < num_sizes; i++) {  // O(num_sizes) - цикл
+        fprintf(file, "%d,%.10f,%.10f\n", sizes[i], linear_times[i], binary_times[i]);  // O(1) - запись строки
+    }
+    
+    fclose(file);  // O(1) - закрытие файла
+    printf("Данные записаны в %s\n", filename);  // O(1) - вывод сообщения
+}
+// Общая сложность: O(num_sizes)
