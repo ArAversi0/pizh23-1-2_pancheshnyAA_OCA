@@ -58,3 +58,49 @@ int binary_search(int arr[], int size, int target) {
     return -1;  // O(1) - возврат значения
 }
 // Общая сложность: O(log n)
+
+// Функция для генерации отсортированного массива
+int* generate_sorted_array(int size) {
+    int* arr = (int*)malloc(size * sizeof(int));  // O(n) - выделение памяти
+    int i;  // O(1) - объявление переменной
+    
+    if (arr == NULL) {  // O(1) - проверка указателя
+        return NULL;  // O(1) - возврат значения
+    }
+    
+    // O(n) - заполнение массива
+    for (i = 0; i < size; i++) {  // O(n) - цикл по n элементам
+        arr[i] = i * 2;  // O(1) - присваивание (создание отсортированного массива)
+    }
+    
+    return arr;  // O(1) - возврат указателя
+}
+// Общая сложность: O(n)
+
+// Функция для измерения времени выполнения поиска
+double measure_time(int (*search_func)(int[], int, int), int arr[], int size, int target, int iterations) {
+    double total_time;  // O(1) - объявление переменной
+    int i;  // O(1) - объявление переменной
+    
+    // Использование QueryPerformanceCounter для высокоточного измерения времени (аналог time.perf_counter() в Python)
+    // Измеряем суммарное время всех итераций сразу для большей точности
+    LARGE_INTEGER frequency, start, end;  // O(1) - объявление переменных
+    QueryPerformanceFrequency(&frequency);  // O(1) - получение частоты счетчика
+    
+    // Измеряем время начала всех итераций
+    QueryPerformanceCounter(&start);  // O(1) - получение времени начала всех итераций
+    
+    // O(iterations) - выполнение заданного количества итераций
+    for (i = 0; i < iterations; i++) {  // O(iterations) - цикл
+        search_func(arr, size, target);  // O(complexity) - вызов функции поиска
+    }
+    
+    // Измеряем время окончания всех итераций
+    QueryPerformanceCounter(&end);  // O(1) - получение времени окончания всех итераций
+    
+    // Вычисляем суммарное время и делим на количество итераций
+    total_time = (double)(end.QuadPart - start.QuadPart) / frequency.QuadPart;  // O(1) - вычисление суммарного времени
+  
+    return total_time / iterations;  // O(1) - возврат среднего значения
+}
+// Общая сложность: O(iterations * complexity(search_func))
