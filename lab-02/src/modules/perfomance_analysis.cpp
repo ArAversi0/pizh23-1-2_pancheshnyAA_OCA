@@ -56,3 +56,26 @@ void compare_list_vs_linkedlist() {
                  "LinkedList", "std::vector (insert at begin)",
                  "Сравнение вставки в начало: LinkedList vs std::vector");
 }
+
+void compare_list_vs_deque() {
+    std::vector<int> sizes = {1000, 2000, 5000, 10000, 20000};
+    std::vector<double> dq_times, vec_times;
+
+    for (int N : sizes) {
+        std::deque<int> dq(N, 1);
+        auto start = std::chrono::high_resolution_clock::now();
+        for (int i = 0; i < N; ++i) dq.pop_front(); // O(1)
+        auto end = std::chrono::high_resolution_clock::now();
+        dq_times.push_back(std::chrono::duration<double>(end - start).count());
+
+        std::vector<int> vec(N, 1);
+        start = std::chrono::high_resolution_clock::now();
+        for (int i = 0; i < N; ++i) vec.erase(vec.begin()); // O(n)
+        end = std::chrono::high_resolution_clock::now();
+        vec_times.push_back(std::chrono::duration<double>(end - start).count());
+    }
+
+    plot_results("deque_vs_vector.png", sizes, dq_times, vec_times,
+                 "std::deque", "std::vector (erase from begin)",
+                 "Сравнение удаления из начала: deque vs vector");
+}
