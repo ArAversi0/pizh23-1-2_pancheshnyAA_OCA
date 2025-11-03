@@ -33,3 +33,26 @@ void plot_results(const std::string& title,
     plt::save(filename);
     plt::close();
 }
+
+void compare_list_vs_linkedlist() {
+    std::vector<int> sizes = {1000, 2000, 5000, 10000, 20000};
+    std::vector<double> ll_times, vec_times;
+
+    for (int N : sizes) {
+        LinkedList ll;
+        auto start = std::chrono::high_resolution_clock::now();
+        for (int i = 0; i < N; ++i) ll.insert_at_start(i); // O(1)
+        auto end = std::chrono::high_resolution_clock::now();
+        ll_times.push_back(std::chrono::duration<double>(end - start).count());
+
+        std::vector<int> vec;
+        start = std::chrono::high_resolution_clock::now();
+        for (int i = 0; i < N; ++i) vec.insert(vec.begin(), i); // O(n)
+        end = std::chrono::high_resolution_clock::now();
+        vec_times.push_back(std::chrono::duration<double>(end - start).count());
+    }
+
+    plot_results("list_vs_linkedlist.png", sizes, ll_times, vec_times,
+                 "LinkedList", "std::vector (insert at begin)",
+                 "Сравнение вставки в начало: LinkedList vs std::vector");
+}
