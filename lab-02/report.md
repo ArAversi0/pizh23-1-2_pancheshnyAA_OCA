@@ -412,16 +412,16 @@ list pop(0) (O(n)):    0.000159 сек
 ---
 
 ## Приложения
-- [Ссылка на linked_list.py]()
-- [Ссылка на perfomance_analysis.py]()
-- [Ссылка на task_solutions.py]()
+- [Ссылка на linked_list.py](https://github.com/ArAversi0/pizh23-1-2_pancheshnyAA_OCA/blob/main/lab-02/src/modules/linked_list.py)
+- [Ссылка на perfomance_analysis.py](https://github.com/ArAversi0/pizh23-1-2_pancheshnyAA_OCA/blob/main/lab-02/src/modules/perfomance_analysis.py)
+- [Ссылка на task_solutions.py](https://github.com/ArAversi0/pizh23-1-2_pancheshnyAA_OCA/blob/main/lab-02/src/modules/task_solutions.py)
 
 ---
 
 ### Графики
 #### График 1: Сравнение удаления из начала (deque против list)
-![Сравнение удаления из начала]()
+![Сравнение удаления из начала](https://github.com/ArAversi0/pizh23-1-2_pancheshnyAA_OCA/blob/main/lab-02/report/deque_vs_list.png)
 
 #### График 2: Сравнение вставки в начало (python list против linked list)
-![Сравнение вставки в начало]()
+![Сравнение вставки в начало](https://github.com/ArAversi0/pizh23-1-2_pancheshnyAA_OCA/blob/main/lab-02/report/list_vs_linkedlist.png)
 
