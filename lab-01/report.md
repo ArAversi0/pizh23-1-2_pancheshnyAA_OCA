@@ -492,21 +492,21 @@ print("   - случайными колебаниями времени выпо�
 
 
 ## Приложения
-- [Ссылка на main.c](https://github.com/ArAversi0/pizh23-1-2_pancheshnyAA_OCA.git/blob/lab-01/src/main.c)
-- [Ссылка на search_comparison.c](https://github.com/ArAversi0/pizh23-1-2_pancheshnyAA_OCA.git/blob/lab-01/src/modules/search_comparison.c)
-- [Ссылка на search_comparison.h](https://github.com/ArAversi0/pizh23-1-2_pancheshnyAA_OCA.git/blob/lab-01/src/modules/search_comparison.h)
-- [Ссылка на visualization.py](https://github.com/ArAversi0/pizh23-1-2_pancheshnyAA_OCA.git/blob/lab-01/src/modules/visualization.py)
+- [Ссылка на main.c](https://github.com/ArAversi0/pizh23-1-2_pancheshnyAA_OCA/blob/main/lab-01/src/main.c)
+- [Ссылка на search_comparison.c](https://github.com/ArAversi0/pizh23-1-2_pancheshnyAA_OCA/blob/main/lab-01/src/modules/search_comparison.c)
+- [Ссылка на search_comparison.h](https://github.com/ArAversi0/pizh23-1-2_pancheshnyAA_OCA/blob/main/lab-01/src/modules/search_comparison.h)
+- [Ссылка на visualization.py](https://github.com/ArAversi0/pizh23-1-2_pancheshnyAA_OCA/blob/main/lab-01/src/modules/visualization.py)
 
 ### Графики
 #### График 1: Сравнение времени выполнения в обычном масштабе
-![Сравнение алгоритмов поиска](https://github.com/ArAversi0/pizh23-1-2_pancheshnyAA_OCA/blob/lab-01/report/search_plot_linear.png)
+![Сравнение алгоритмов поиска](https://github.com/ArAversi0/pizh23-1-2_pancheshnyAA_OCA/blob/main/lab-01/report/search_plot_linear.png)
 
 **Пояснение:**
 - Линейный поиск растёт практически линейно с увеличением размера массива, что соответствует теоретической оценке O(n).
 - Бинарный поиск остаётся почти постоянным, его время увеличивается очень медленно, что соответствует O(log n).
 
 #### График 2: Сравнение времени выполнения в логарифмическом масштабе по оси y
-![Сравнение алгоритмов поиска (логарифмический масштаб по y)](https://github.com/ArAversi0/pizh23-1-2_pancheshnyAA_OCA/blob/lab-01/report/search_plot_log.png)
+![Сравнение алгоритмов поиска (логарифмический масштаб по y)](https://github.com/ArAversi0/pizh23-1-2_pancheshnyAA_OCA/blob/main/lab-01/report/search_plot_log.png)
 
 **Пояснение:**
 - Линейный поиск на лог-масштабе демонстрирует прямую линию с положительным наклоном, подтверждающую линейный рост.
