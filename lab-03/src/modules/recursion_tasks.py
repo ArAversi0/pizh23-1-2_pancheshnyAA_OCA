@@ -49,3 +49,31 @@ def hanoi_moves(n: int, src: str, aux: str, dst: str,
     hanoi_moves(n - 1, aux, src, dst, moves)
 
     return moves
+
+
+def walk_directory(path: str, depth: int = 0, max_depth: Optional[int] = None) -> List[str]:
+    """Рекурсивный обход директории: возвращает список строк с отступами, представляющими дерево.
+
+    depth: текущий уровень (используется для отступов).
+    max_depth: если задан, ограничивает глубину обхода.
+
+    Временная сложность: O(number_of_files + number_of_dirs)
+    Пространственная сложность: O(depth)
+    """
+    tree: List[str] = []
+    indent = "  " * depth
+
+    try:
+        for entry in os.scandir(path):
+            tree.append(indent + entry.name)
+            if entry.is_dir(follow_symlinks=False):
+                if max_depth is None or depth + 1 <= max_depth:
+                    subtree = walk_directory(entry.path, depth + 1, max_depth)
+                    tree.extend(subtree)
+
+    except PermissionError:
+        tree.append(indent + "[PermissionError]")
+    except FileNotFoundError:
+        tree.append(indent + "[NotFound]")
+
+    return tree
