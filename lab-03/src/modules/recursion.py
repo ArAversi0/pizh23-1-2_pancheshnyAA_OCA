@@ -46,3 +46,31 @@ def fib_naive(n: int) -> int:
     left = fib_naive(n - 1)
     right = fib_naive(n - 2)
     return left + right
+
+
+def fast_pow(a: float, n: int) -> float:
+    """Быстрое возведение a в степень n (exponentiation by squaring).
+
+    Временная сложность: O(log n)
+    Пространственная сложность: O(log n)
+    """
+    if n < 0:
+        # эквивалентное значение для отрицательной степени
+        return fast_pow(a, -n) ** -1
+
+    if n == 0:
+        return 1.0
+
+    if n & 1 == 0:  # проверка чётности через битовую операцию
+        part = fast_pow(a, n // 2)
+        return part * part
+
+    # нечётная степень
+    return a * fast_pow(a, n - 1)
+
+
+if __name__ == "__main__":
+    print(PC_INFO)
+    print("factorial(5) =", factorial(5))
+    print("fib_naive(10) =", fib_naive(10))
+    print("fast_pow(2, 10) =", fast_pow(2, 10))
