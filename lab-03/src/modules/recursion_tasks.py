@@ -77,3 +77,40 @@ def walk_directory(path: str, depth: int = 0, max_depth: Optional[int] = None) -
         tree.append(indent + "[NotFound]")
 
     return tree
+
+
+def max_depth_walk(path: str) -> int:
+    """Измеряет максимальную глубину вложенности в файловой системе начиная с path.
+
+    Возвращает максимальное значение depth.
+    """
+    max_depth = 0
+    try:
+        for entry in os.scandir(path):
+            if entry.is_dir(follow_symlinks=False):
+                sub_d = max_depth_walk(entry.path)
+                if sub_d + 1 > max_depth:
+                    max_depth = sub_d + 1
+    except (PermissionError, FileNotFoundError):
+        return 0
+
+    return max_depth
+
+
+# Примеры работы
+if __name__ == "__main__":
+    arr_example = list(range(0, 100, 2))
+    idx = recursive_binary_search(arr_example, 42, 0, len(arr_example) - 1)
+    print("Index of 42 in even array:", idx)
+
+    moves_example = hanoi_moves(3, "A", "B", "C")
+    print("Hanoi moves for n=3:")
+    for move in moves_example:
+        print(f"{move[0]} -> {move[1]}")
+
+    tree = walk_directory(".", max_depth=2)
+    print("Directory tree (depth <=2):")
+    for line in tree[:50]:
+        print(line)
+
+    print("Max directory depth (this dir):", max_depth_walk("."))
