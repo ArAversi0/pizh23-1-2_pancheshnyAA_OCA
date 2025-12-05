@@ -2,10 +2,10 @@ from typing import Dict, Optional
 
 PC_INFO: str = (
     "Характеристики ПК для тестирования:\n"
-    "- CPU: (заполните)\n"
-    "- RAM: (заполните)\n"
-    "- ОС: (заполните)\n"
-    "- Python: (заполните)\n"
+    "- CPU: Intel Core i5-12450H\n"
+    "- RAM: 16 GB DDR 4\n"
+    "- ОС: Windows 11 Pro\n"
+    "- Python: 3.10.9\n"
 )
 
 
