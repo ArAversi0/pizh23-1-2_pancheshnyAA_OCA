@@ -12,6 +12,30 @@ import statistics
 from typing import List, Dict
 
 
+def pc_info() -> str:
+    """Вывод информации о ПК. Заполнить CPU и RAM для метода проверки."""
+    info = (
+        f"Platform: {platform.platform()}\n"
+        f"CPU info: Intel(R) Core(TM) i7-12700H\n"
+        f"RAM: 16GB\n"
+        f"Python: {platform.python_version()}\n"
+    )
+    return info
+
+
+def build_balanced_sequence(n: int) -> List[int]:
+    """Возвращает последовательность, приближающую баланс дерева.
+    Использует рекурсивный выбор медианы.
+    Временная сложность: O(n)
+    """
+    def seq(arr: List[int]) -> List[int]:
+        if not arr:
+            return []
+        mid = len(arr) // 2
+        return [arr[mid]] + seq(arr[:mid]) + seq(arr[mid+1:])
+    return seq(list(range(1, n+1)))
+
+
 def run_search_benchmark(sizes: List[int] = [1000, 2000, 5000, 10000]) -> Dict[str, List[float]]:
     """Замер времени поиска в сбалансированном и вырожденном BST.
     Возвращает словарь с результатами поиска для каждого размера дерева.
