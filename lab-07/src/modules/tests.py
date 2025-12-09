@@ -3,6 +3,7 @@
 """
 import unittest
 import random
+
 from heap import MinHeap
 from heapsort import heapsort, heapsort_inplace
 from priority_queue import PriorityQueue
@@ -17,7 +18,7 @@ class TestHeapDataStructures(unittest.TestCase):
         for x in data:
             h.insert(x)
 
-        # Ожидаемый порядок извлечения (сортировка): 2, 4, 10, 15, 20
+        # Ожидаемый порядок извлечения: 2, 4, 10, 15, 20
         self.assertEqual(h.extract(), 2)
         self.assertEqual(h.extract(), 4)
         self.assertEqual(h.peek(), 10)  # Проверка peek
@@ -30,12 +31,15 @@ class TestHeapDataStructures(unittest.TestCase):
         h = MinHeap()
         arr = [9, 3, 7, 1, 5]
         h.build_heap(arr)
+
         # Корень должен быть минимальным (1)
         self.assertEqual(h.peek(), 1)
-        # Проверяем, что это валидная куча, извлекая все элементы
+
+        # Извлекаем все элементы и проверяем порядок
         result = []
         while h.peek() is not None:
             result.append(h.extract())
+
         self.assertEqual(result, [1, 3, 5, 7, 9])
 
     def test_heapsort_class(self):
@@ -48,18 +52,19 @@ class TestHeapDataStructures(unittest.TestCase):
         """Тест in-place сортировки."""
         data = [random.randint(-100, 100) for _ in range(100)]
         original_copy = data[:]
+
         heapsort_inplace(data)
         self.assertEqual(data, sorted(original_copy))
 
     def test_priority_queue(self):
         """Тест приоритетной очереди."""
         pq = PriorityQueue()
-        # Добавляем задачи в разнобой
+
         pq.enqueue("task_low", 10)
         pq.enqueue("task_urgent", 1)
         pq.enqueue("task_normal", 5)
 
-        # Должны выходить в порядке приоритета: 1 -> 5 -> 10
+        # Порядок по приоритету: 1 -> 5 -> 10
         self.assertEqual(pq.dequeue(), "task_urgent")
         self.assertEqual(pq.dequeue(), "task_normal")
         self.assertEqual(pq.dequeue(), "task_low")
