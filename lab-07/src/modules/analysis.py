@@ -6,8 +6,8 @@ import timeit
 import random
 import matplotlib.pyplot as plt
 
-from .heap import MinHeap
-from .heapsort import heapsort_inplace
+from heap import MinHeap
+from heapsort import heapsort_inplace
 
 
 # Характеристики ПК (Заполнить своими данными)
