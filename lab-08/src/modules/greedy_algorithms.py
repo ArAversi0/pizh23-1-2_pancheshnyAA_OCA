@@ -70,3 +70,74 @@ def fractional_knapsack(items, capacity):
     return total_value, fractions  # O(1)
     # Общая сложность: O(N log N) + O(N) = O(N log N)
 
+
+# --- 3. Код Хаффмана (Huffman Coding) ---
+
+class HuffmanNode:
+    """Узел дерева Хаффмана."""
+    def __init__(self, char, freq):
+        self.char = char  # O(1)
+        self.freq = freq  # O(1)
+        self.left = None  # O(1)
+        self.right = None  # O(1)
+
+    def __lt__(self, other):
+        return self.freq < other.freq  # O(1)
+
+
+def build_huffman_tree(text):
+    """
+    Строит дерево Хаффмана.
+    N - длина текста, K - количество уникальных символов (размер алфавита).
+    """
+    if not text:  # O(1)
+        return None
+
+    frequency = Counter(text)  # O(N)
+
+    # Создание списка узлов
+    heap = [HuffmanNode(ch, fr) for ch, fr in frequency.items()]  # O(K)
+    heapq.heapify(heap)  # O(K)
+
+    while len(heap) > 1:  # O(K)
+        node1 = heapq.heappop(heap)  # O(log K)
+        node2 = heapq.heappop(heap)  # O(log K)
+
+        merged = HuffmanNode(None, node1.freq + node2.freq)
+        merged.left = node1
+        merged.right = node2
+
+        heapq.heappush(heap, merged)  # O(log K)
+
+    return heap[0]  # O(1)
+    # Общая сложность: O(N) + O(K log K)
+
+
+def generate_huffman_codes(node, prefix="", code_map=None):
+    """
+    Рекурсивный обход дерева для генерации кодов.
+    K - количество узлов в дереве (2*unique_chars - 1).
+    """
+    if code_map is None:  # O(1)
+        code_map = {}
+
+    if node is not None:  # O(1)
+        if node.char is not None:  # O(1)
+            code_map[node.char] = prefix if prefix else "0"
+        else:
+            generate_huffman_codes(node.left, prefix + "0", code_map)
+            generate_huffman_codes(node.right, prefix + "1", code_map)
+
+    return code_map  # O(1)
+    # Общая сложность: O(K)
+
+
+def huffman_encoding(text):
+    """Обертка для кодирования текста."""
+    root = build_huffman_tree(text)  # O(N + K log K)
+    codes = generate_huffman_codes(root)  # O(K)
+
+    encoded_text = "".join(codes[ch] for ch in text)  # O(N)
+
+    return encoded_text, codes, root
+    # Общая сложность: O(N)
