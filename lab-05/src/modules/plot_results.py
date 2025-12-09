@@ -1,10 +1,20 @@
 import random
 import string
+import os
 import matplotlib.pyplot as plt
 from hash_table_chaining import HashTableChaining
 from hash_table_open_addressing import HashTableOpenAddressing
 from hash_functions import simple_hash, poly_hash, djb2
 from performance import measure
+
+
+CURRENT_FILE = os.path.abspath(__file__)
+MODULES_DIR = os.path.dirname(CURRENT_FILE)
+SRC_DIR = os.path.dirname(MODULES_DIR)
+PROJECT_DIR = os.path.dirname(SRC_DIR)
+REPORT_DIR = os.path.join(PROJECT_DIR, "report")
+
+os.makedirs(REPORT_DIR, exist_ok=True)
 
 
 def random_keys(n: int, length: int = 5) -> list[str]:
@@ -47,7 +57,7 @@ def plot_insert_time_vs_load():
     plt.legend()
     plt.tight_layout()
 
-    plt.savefig("lab05_insert_time.png")
+    plt.savefig(os.path.join(REPORT_DIR, "lab05_insert_time.png"))
     plt.show()
     print("Saved lab05_insert_time.png")
 
@@ -81,7 +91,7 @@ def plot_collision_histograms():
         plt.grid(True, which="both", linestyle="--", linewidth=0.5)
         plt.tight_layout()
 
-        plt.savefig(f"collision_histogram_{name}.png")
+        plt.savefig(os.path.join(REPORT_DIR, f"collision_histogram_{name}.png"))
         plt.show()
         print(f"Saved collision_histogram_{name}.png")
 
