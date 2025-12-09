@@ -98,3 +98,99 @@ class BinarySearchTree:
             node.key = succ.key  # замена значения - O(1)
             node.right = self._delete_rec(node.right, succ.key)  # удалить преемника - O(h)
         return node  # O(1)
+    
+    def inorder(self) -> List[int]:
+        """Рекурсивный in-order traversal: O(n)."""
+        res: List[int] = []
+
+        def _in(n: Optional[TreeNode]) -> None:
+            if n is None:
+                return
+            _in(n.left)  # O(size left)
+            res.append(n.key)  # O(1)
+            _in(n.right)  # O(size right)
+
+        _in(self.root)  # O(n)
+        return res  # O(1)
+
+    def preorder(self) -> List[int]:
+        """Рекурсивный pre-order traversal: O(n)."""
+        res: List[int] = []
+
+        def _pre(n: Optional[TreeNode]) -> None:
+            if n is None:
+                return
+            res.append(n.key)
+            _pre(n.left)
+            _pre(n.right)
+
+        _pre(self.root)
+        return res
+
+    def postorder(self) -> List[int]:
+        """Рекурсивный post-order traversal: O(n)."""
+        res: List[int] = []
+
+        def _post(n: Optional[TreeNode]) -> None:
+            if n is None:
+                return
+            _post(n.left)
+            _post(n.right)
+            res.append(n.key)
+
+        _post(self.root)
+        return res
+
+    def inorder_iterative(self) -> List[int]:
+        """Итеративный in-order обход с явным стеком. Сложность O(n), память O(h)."""
+        res: List[int] = []
+        stack: List[TreeNode] = []
+        node = self.root
+        while stack or node:
+            while node:
+                stack.append(node)  # O(1) per push
+                node = node.left
+            node = stack.pop()  # O(1)
+            res.append(node.key)  # O(1)
+            node = node.right
+        return res
+
+    def height(self, node: Optional[TreeNode] = None) -> int:
+        """Высота поддерева: O(n) (посещает все узлы в худшем случае)."""
+        if node is None:
+            node = self.root
+        def _h(n: Optional[TreeNode]) -> int:
+            if n is None:
+                return 0
+            left_h = _h(n.left)
+            right_h = _h(n.right)
+            return 1 + max(left_h, right_h)
+        return _h(node)
+
+    def is_valid_bst(self) -> bool:
+        """Проверка корректности BST: O(n)."""
+        def _check(node: Optional[TreeNode], low: Any, high: Any) -> bool:
+            if node is None:
+                return True
+            if not (low < node.key < high):
+                return False
+            return _check(node.left, low, node.key) and _check(node.right, node.key, high)
+        import math
+        return _check(self.root, -math.inf, math.inf)
+
+    def text_visualize(self) -> str:
+        """Текстовая визуализация (отступы). Сложность O(n)."""
+        lines: List[str] = []
+        def _viz(n: Optional[TreeNode], depth: int) -> None:
+            if n is None:
+                return
+            _viz(n.right, depth + 1)
+            lines.append("    " * depth + str(n.key))
+            _viz(n.left, depth + 1)
+        _viz(self.root, 0)
+        return "\n".join(lines)
+
+    def build_from_list(self, values: List[int]) -> None:
+        """Поэлементная вставка из списка. Сложность: O(n*h) общей — зависит от порядка."""
+        for v in values:
+            self.insert(v)
