@@ -16,6 +16,7 @@ class MinHeap:
         # Поддержка корректной работы при размещении в src/modules
         self.heap = []  # O(1) - создание пустого списка
 
+
     def _sift_up(self, index):
         """
         Всплытие элемента (sift-up).
@@ -34,6 +35,7 @@ class MinHeap:
                 index = parent_index  # O(1) - переход на уровень выше
             else:
                 break  # O(1) - условие кучи выполнено
+
 
     def _sift_down(self, index):
         """
@@ -66,4 +68,68 @@ class MinHeap:
             else:
                 break  # O(1) - позиция найдена
 
-   
+
+    def insert(self, value):
+        """
+        Вставка нового элемента в кучу.
+        """
+        self.heap.append(value)  # O(1) - добавление в конец массива
+        self._sift_up(len(self.heap) - 1)  # O(log N) - восстановление свойства
+        # Общая сложность: O(log N)
+
+
+    def extract(self):
+        """
+        Извлечение минимального элемента (корня).
+        """
+        if not self.heap:
+            raise IndexError("Куча пуста")  # O(1)
+
+        min_val = self.heap[0]  # O(1) - запоминаем корень
+        last_val = self.heap.pop()  # O(1) - удаляем последний элемент
+
+        if self.heap:  # Если куча не стала пустой
+            self.heap[0] = last_val  # O(1) - ставим последний элемент в корень
+            self._sift_down(0)  # O(log N) - восстанавливаем свойство кучи
+
+        return min_val  # O(1)
+        # Общая сложность: O(log N)
+
+
+    def peek(self):
+        """
+        Просмотр минимального элемента без удаления.
+        """
+        if not self.heap:
+            return None  # O(1)
+        return self.heap[0]  # O(1)
+
+
+    def build_heap(self, array):
+        """
+        Построение кучи из произвольного массива.
+        """
+        self.heap = array[:]  # O(N) - копирование массива
+        # Начинаем с последнего родителя и идем до корня
+        # Индекс последнего родителя: (n // 2) - 1
+        for i in range((len(self.heap) // 2) - 1, -1, -1):  # O(N) итераций
+            self._sift_down(i)  # Сложность меняется от высоты, сумма дает O(N)
+        # Общая сложность: O(N)
+
+
+    def print_tree(self):
+        """
+        Текстовая визуализация дерева кучи (вспомогательный метод).
+        """
+        if not self.heap:
+            print("(Empty heap)")
+            return
+
+        h = int(math.log2(len(self.heap))) + 1
+        for i in range(h):
+            items_on_level = 2**i
+            start_index = 2**i - 1
+            end_index = start_index + items_on_level
+            level_items = self.heap[start_index:end_index]
+            spacing = " " * (2 ** (h - i + 1))
+            print(spacing.join(map(str, level_items)).center(80))
