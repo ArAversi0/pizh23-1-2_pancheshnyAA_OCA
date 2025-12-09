@@ -11,6 +11,7 @@ class TreeNode:
         self.left: Optional["TreeNode"] = None  # O(1)
         self.right: Optional["TreeNode"] = None  # O(1)
 
+
     def __repr__(self) -> str:
         return f"TreeNode({self.key})"  # O(1)
 
@@ -22,6 +23,7 @@ class BinarySearchTree:
     """
     def __init__(self) -> None:
         self.root: Optional[TreeNode] = None  # O(1)
+
 
     def insert(self, key: int) -> None:
         """Вставка ключа в BST.
@@ -43,6 +45,7 @@ class BinarySearchTree:
                     return
                 node = node.right  # O(1)
 
+
     # ------------------ Search ------------------
     def search(self, key: int) -> Optional[TreeNode]:
         """Поиск узла по ключу.
@@ -55,6 +58,7 @@ class BinarySearchTree:
             node = node.left if key < node.key else node.right  # O(1)
         return None  # O(1)
 
+
     # ------------------ Find min/max ------------------
     def find_min(self, node: Optional[TreeNode]) -> Optional[TreeNode]:
         """Найти минимум в поддереве. Сложность: O(h) -> O(n) worst, O(log n) avg."""
@@ -64,6 +68,7 @@ class BinarySearchTree:
             node = node.left  # O(1)
         return node  # O(1)
 
+
     def find_max(self, node: Optional[TreeNode]) -> Optional[TreeNode]:
         """Найти максимум в поддереве. Сложность: O(h)."""
         if node is None:
@@ -72,9 +77,11 @@ class BinarySearchTree:
             node = node.right
         return node
 
+
     def delete(self, key: int) -> None:
         """Удаление узла с ключом key. Сложность: O(h) -> O(log n) avg, O(n) worst."""
         self.root = self._delete_rec(self.root, key)  # O(h)
+
 
     def _delete_rec(self, node: Optional[TreeNode], key: int) -> Optional[TreeNode]:
         """Вспомогательная рекурсивная функция удаления. Сложность O(h)."""
@@ -99,6 +106,7 @@ class BinarySearchTree:
             node.right = self._delete_rec(node.right, succ.key)  # удалить преемника - O(h)
         return node  # O(1)
     
+
     def inorder(self) -> List[int]:
         """Рекурсивный in-order traversal: O(n)."""
         res: List[int] = []
@@ -112,6 +120,7 @@ class BinarySearchTree:
 
         _in(self.root)  # O(n)
         return res  # O(1)
+
 
     def preorder(self) -> List[int]:
         """Рекурсивный pre-order traversal: O(n)."""
@@ -127,6 +136,7 @@ class BinarySearchTree:
         _pre(self.root)
         return res
 
+
     def postorder(self) -> List[int]:
         """Рекурсивный post-order traversal: O(n)."""
         res: List[int] = []
@@ -140,6 +150,7 @@ class BinarySearchTree:
 
         _post(self.root)
         return res
+
 
     def inorder_iterative(self) -> List[int]:
         """Итеративный in-order обход с явным стеком. Сложность O(n), память O(h)."""
@@ -155,6 +166,7 @@ class BinarySearchTree:
             node = node.right
         return res
 
+
     def height(self, node: Optional[TreeNode] = None) -> int:
         """Высота поддерева: O(n) (посещает все узлы в худшем случае)."""
         if node is None:
@@ -167,6 +179,7 @@ class BinarySearchTree:
             return 1 + max(left_h, right_h)
         return _h(node)
 
+
     def is_valid_bst(self) -> bool:
         """Проверка корректности BST: O(n)."""
         def _check(node: Optional[TreeNode], low: Any, high: Any) -> bool:
@@ -177,6 +190,7 @@ class BinarySearchTree:
             return _check(node.left, low, node.key) and _check(node.right, node.key, high)
         import math
         return _check(self.root, -math.inf, math.inf)
+
 
     def text_visualize(self) -> str:
         """Текстовая визуализация (отступы). Сложность O(n)."""
@@ -189,6 +203,7 @@ class BinarySearchTree:
             _viz(n.left, depth + 1)
         _viz(self.root, 0)
         return "\n".join(lines)
+
 
     def build_from_list(self, values: List[int]) -> None:
         """Поэлементная вставка из списка. Сложность: O(n*h) общей — зависит от порядка."""
