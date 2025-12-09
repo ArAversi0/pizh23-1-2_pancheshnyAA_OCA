@@ -13,10 +13,10 @@ from heapsort import heapsort_inplace
 # Характеристики ПК (Заполнить своими данными)
 PC_INFO = """
 Характеристики ПК для тестирования:
-- Процессор: Intel Core i5-10210U @ 1.60GHz
-- Оперативная память: 16 GB DDR4
-- ОС: Windows 10
-- Python: 3.13.2
+- Процессор: Intel Core i5-12450H
+- Оперативная память: 16 GB DDR5
+- ОС: Windows 11 Pro
+- Python: 3.10.9
 """
 
 
@@ -60,8 +60,17 @@ def measure_build_heap():
     plt.ylabel('Время (мс)')
     plt.legend()
     plt.grid(True)
+    
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))   # .../src/modules
+    REPORT_DIR = os.path.abspath(os.path.join(BASE_DIR, "..", "..", "report"))
+
+    os.makedirs(REPORT_DIR, exist_ok=True)
+
+    file_path = os.path.join(REPORT_DIR, "build_heap_comparison.png")
+    plt.savefig(file_path)
+    
     try:
-        plt.savefig('build_heap_comparison.png')
+        plt.savefig(file_path)
         print("График сохранён как build_heap_comparison.png")
     except Exception as e:
         print(f"Ошибка сохранения графика: {e}")
@@ -98,8 +107,17 @@ def measure_sorting():
     plt.ylabel('Время (мс)')
     plt.legend()
     plt.grid(True)
+    
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))   # .../src/modules
+    REPORT_DIR = os.path.abspath(os.path.join(BASE_DIR, "..", "..", "report"))
+
+    os.makedirs(REPORT_DIR, exist_ok=True)
+
+    file_path = os.path.join(REPORT_DIR, "sorting_comparison.png")
+    plt.savefig(file_path)
+
     try:
-        plt.savefig('sorting_comparison.png')
+        plt.savefig(file_path)
         print("График сохранён как sorting_comparison.png")
     except Exception as e:
         print(f"Ошибка сохранения графика: {e}")
