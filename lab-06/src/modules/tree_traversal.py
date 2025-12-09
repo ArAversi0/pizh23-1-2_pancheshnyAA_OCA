@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Optional, List
 
 # корректный импорт для структуры проекта src/modules
-from .binary_search_tree import TreeNode
+from binary_search_tree import TreeNode
 
 
 def inorder_recursive(node: Optional[TreeNode], res: List[int]) -> None:

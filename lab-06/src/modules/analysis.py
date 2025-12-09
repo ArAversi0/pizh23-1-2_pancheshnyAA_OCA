@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 
 # корректный импорт для структуры src/modules
-from .binary_search_tree import BinarySearchTree
+from binary_search_tree import BinarySearchTree
 
 import platform
 import statistics
@@ -16,8 +16,8 @@ def pc_info() -> str:
     """Вывод информации о ПК. Заполнить CPU и RAM для метода проверки."""
     info = (
         f"Platform: {platform.platform()}\n"
-        f"CPU info: Intel(R) Core(TM) i7-12700H\n"
-        f"RAM: 16GB\n"
+        f"CPU info: Intel Core i5-12450H\n"
+        f"RAM: 16GB DDR5\n"
         f"Python: {platform.python_version()}\n"
     )
     return info
