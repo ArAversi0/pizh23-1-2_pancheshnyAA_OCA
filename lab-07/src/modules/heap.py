@@ -2,7 +2,7 @@
 Модуль реализации структуры данных MinHeap (Куча).
 """
 import math
-import os  # добавлено: модуль может использоваться в составе src/modules
+import os
 
 
 class MinHeap:
