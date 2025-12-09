@@ -3,10 +3,10 @@ from typing import List
 PC_INFO: str = (
     """
 Характеристики ПК для тестирования:
-- Процессор: Intel Core i5-10210U @ 1.60GHz
+- Процессор: Intel Core i5-12450H
 - Оперативная память: 16 GB DDR4
-- ОС: Windows 10
-- Python: 3.13.2
+- ОС: Windows 11 Pro
+- Python: 3.10.9
 """
 )
 

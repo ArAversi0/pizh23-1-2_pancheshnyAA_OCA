@@ -1,6 +1,7 @@
 import timeit
 import copy
 import csv
+import os
 from typing import List
 
 from sorts_algs import SORT_FUNCTIONS, is_sorted, PC_INFO
@@ -21,10 +22,19 @@ def run_experiments(
     sizes: List[int],
     data_types: List[str],
     runs: int = 3,
-    csv_file: str = "lab04_results.csv"
+    csv_file: str = None
 ):
     results = []
     print(PC_INFO)
+
+    # Автоматическое определение пути, если csv_file не передан
+    if csv_file is None:
+        # __file__ → .../lab-04/src/modules/<этот_файл>.py
+        base_dir = os.path.dirname(__file__)            # .../lab-04/src/modules
+        src_dir = os.path.dirname(base_dir)             # .../lab-04/src
+        data_dir = os.path.join(src_dir, "data")        # .../lab-04/src/data
+        os.makedirs(data_dir, exist_ok=True)
+        csv_file = os.path.join(data_dir, "lab-04_results.csv")
 
     for data_type in data_types:
         for n in sizes:
@@ -48,7 +58,7 @@ def run_experiments(
                 results.append((name, n, data_type, t))
                 print(f"{name:15} | type={data_type:12} | n={n:6} -> {t:8.3f} ms")
 
-    # Сохраняем CSV
+    # Сохранение CSV
     with open(csv_file, "w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
         writer.writerow(["algorithm", "size", "data_type", "time_ms"])

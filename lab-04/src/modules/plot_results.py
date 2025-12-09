@@ -4,7 +4,13 @@ from collections import defaultdict
 import os
 
 
-def load_csv(csv_file: str = "lab 04/src/lab04_results.csv"):
+def load_csv(csv_file: str = None):
+    if csv_file is None:
+        modules_dir = os.path.dirname(__file__)
+        src_dir = os.path.dirname(modules_dir)
+        data_dir = os.path.join(src_dir, "data")
+        csv_file = os.path.join(data_dir, "lab-04_results.csv")
+
     data = defaultdict(list)
     with open(csv_file, newline="", encoding="utf-8") as file:
         reader = csv.DictReader(file)
@@ -15,6 +21,7 @@ def load_csv(csv_file: str = "lab 04/src/lab04_results.csv"):
             time_ms = float(row["time_ms"])
             data[alg].append((size, dtype, time_ms))
     return data
+
 
 def plot_time_vs_size(data, data_type: str = "random"):
     plt.figure()
@@ -32,8 +39,13 @@ def plot_time_vs_size(data, data_type: str = "random"):
     plt.grid(True)
     plt.tight_layout()
 
-    save_dir = os.path.dirname(__file__)
-    save_path = os.path.join(save_dir, f"time_vs_size_{data_type}.png")
+    modules_dir = os.path.dirname(__file__)       # .../lab-04/src/modules
+    src_dir = os.path.dirname(modules_dir)        # .../lab-04/src
+    project_dir = os.path.dirname(src_dir)        # .../lab-04
+    report_dir = os.path.join(project_dir, "report")
+    os.makedirs(report_dir, exist_ok=True)
+
+    save_path = os.path.join(report_dir, f"time_vs_size_{data_type}.png")
     plt.savefig(save_path, dpi=300)
     plt.close()
 
@@ -57,8 +69,13 @@ def plot_time_vs_type(data, size: int = 5000):
     plt.grid(True)
     plt.tight_layout()
 
-    save_dir = os.path.dirname(__file__)
-    save_path = os.path.join(save_dir, f"time_vs_type_size{size}.png")
+    modules_dir = os.path.dirname(__file__)       # .../lab-04/src/modules
+    src_dir = os.path.dirname(modules_dir)        # .../lab-04/src
+    project_dir = os.path.dirname(src_dir)        # .../lab-04
+    report_dir = os.path.join(project_dir, "report")
+    os.makedirs(report_dir, exist_ok=True)
+
+    save_path = os.path.join(report_dir, f"time_vs_type_size{size}.png")
     plt.savefig(save_path, dpi=300)
     plt.close()
 
